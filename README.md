@@ -4,6 +4,10 @@ An open, domain-neutral contract for mobile apps that render user-selected websi
 
 Status: **0.1.0 draft — not production ready**
 
+## Reference client purpose
+
+The app extends compatible, content-rich website experiences to mobile devices. After a user connects a website, it integrates the website's supported content, lists, and tasks with device-local progress, offline access, and user-configured notifications.
+
 ## Core boundary
 
 A conforming mobile client starts disconnected. It does not contain a default publisher, private registry, domain-specific vocabulary, hidden endpoint, or remotely downloaded application runtime. A user explicitly enters a compatible HTTPS URL or scans a connection QR before the client makes a publisher request.
