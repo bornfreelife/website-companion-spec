@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "publisher": {
+    "name": "Example Community Publisher",
+    "origin": "https://demo.example",
+    "supportUrl": "https://demo.example/support",
+    "privacyUrl": "https://demo.example/privacy",
+    "termsUrl": "https://demo.example/terms"
+  },
+  "manifestUrl": "https://demo.example/companion/manifest.json",
+  "publicKeys": [
+    {
+      "keyId": "demo-2026-01",
+      "alg": "Ed25519",
+      "status": "active",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      }
+    }
+  ]
+}

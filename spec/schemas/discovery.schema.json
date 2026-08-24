@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:website-companion:schema:discovery:1.0",
+  "title": "Website Companion discovery document",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "publisher", "manifestUrl", "publicKeys"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "publisher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "origin", "supportUrl", "privacyUrl", "termsUrl"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "origin": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "supportUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "privacyUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "termsUrl": { "type": "string", "format": "uri", "pattern": "^https://" }
+      }
+    },
+    "manifestUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "publicKeys": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/publicKey" }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9.-]{2,100}$" }
+    }
+  },
+  "$defs": {
+    "publicKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["keyId", "alg", "publicKeyJwk", "status"],
+      "properties": {
+        "keyId": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,80}$" },
+        "alg": { "const": "Ed25519" },
+        "status": { "enum": ["active", "retiring", "revoked"] },
+        "publicKeyJwk": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kty", "crv", "x"],
+          "properties": {
+            "kty": { "const": "OKP" },
+            "crv": { "const": "Ed25519" },
+            "x": { "type": "string", "pattern": "^[A-Za-z0-9_-]{43}$" }
+          }
+        }
+      }
+    }
+  }
+}

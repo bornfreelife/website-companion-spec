@@ -1,0 +1,52 @@
+# Architecture
+
+## Actors
+
+- **User:** selects and confirms a publisher, makes choices, owns local progress, and configures reminders.
+- **Publisher:** serves public declarative resources and owns its content, claims, external links, support, provenance, and update process.
+- **Client:** validates and renders supported resources, stores local state, schedules local reminders, and enforces native/security/accessibility limits.
+
+## Connection flow
+
+```text
+fresh disconnected client
+  -> user types HTTPS URL or scans QR
+  -> local parse and fragment quarantine
+  -> HTTPS discovery document
+  -> publisher identity/key/capability preview
+  -> user confirms connection
+  -> signed manifest and hashed resources
+  -> isolated validation
+  -> atomic activation
+  -> encrypted namespaced local state
+```
+
+No publisher request occurs before the user initiates a connection. The client does not send the scanned fragment, local answers, progress, reminder configuration, or a cross-publisher identifier during discovery or refresh.
+
+## Fixed runtime, declarative resources
+
+The signed client owns:
+
+- component implementations and navigation invariants;
+- local state, migrations, export, and deletion;
+- native permissions, browser handoff, files, sharing, and notifications;
+- accessibility, safe areas, contrast, text scaling, reduced motion, and offline behavior;
+- schema, origin, link, resource-size, cache, signature, and compatibility enforcement.
+
+A publisher may select from supported components and provide content, theme tokens, static assets, schedules, and external links. A publisher cannot add executable behavior or a new native capability without a client/store release.
+
+## State separation
+
+Public resources and private local state are separate data planes:
+
+```text
+publisher -> public signed resources -> client cache
+user      -> private local choices   -> encrypted local store
+client    -> generic cache validators -> publisher
+```
+
+Private state is keyed by canonical publisher origin, stable site ID, and experience ID. One connected publisher cannot enumerate or overwrite another publisher's state.
+
+## Content responsibility
+
+The client MUST identify the publisher and preserve source/provenance metadata. Conformance does not approve publisher content. Clients remain responsible for content they display or link to under applicable platform rules, and publishers remain responsible for their functionality, claims, and legal obligations.

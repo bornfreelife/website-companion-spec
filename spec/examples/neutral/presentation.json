@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0",
+  "resourceType": "presentation",
+  "resourceId": "community-events.presentation",
+  "version": "2026.08.24.1",
+  "requires": {
+    "minimumClientVersion": "1.0.0",
+    "components": ["hero@1", "progress@1", "checklist@1", "link-list@1"]
+  },
+  "theme": {
+    "colorRoles": {
+      "primary": "#315C74",
+      "onPrimary": "#FFFFFF",
+      "surface": "#FFFFFF",
+      "onSurface": "#172126",
+      "accent": "#D18A35"
+    },
+    "typographyPreset": "system",
+    "densityPreset": "comfortable",
+    "radiusPreset": "soft"
+  },
+  "screens": [
+    {
+      "screenId": "upcoming-events",
+      "title": "Upcoming events",
+      "layout": "guided",
+      "sections": [
+        { "component": "hero@1", "source": "events.introduction" },
+        { "component": "progress@1", "source": "local-progress" },
+        { "component": "checklist@1", "source": "events.actions" },
+        { "component": "link-list@1", "source": "events.links" }
+      ]
+    }
+  ],
+  "notificationTemplates": {
+    "private": "You have an upcoming item to review",
+    "detailed": "Review: {publisherSuppliedShortReminder}"
+  }
+}

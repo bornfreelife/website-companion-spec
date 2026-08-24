@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:website-companion:schema:presentation:1.0",
+  "title": "Website Companion presentation resource",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "resourceType", "resourceId", "version", "requires", "theme", "screens"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "resourceType": { "const": "presentation" },
+    "resourceId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+    "version": { "type": "string", "pattern": "^[A-Za-z0-9._+-]{1,80}$" },
+    "requires": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumClientVersion", "components"],
+      "properties": {
+        "minimumClientVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 30,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/component" }
+        }
+      }
+    },
+    "theme": { "$ref": "#/$defs/theme" },
+    "screens": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/screen" }
+    },
+    "assets": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/asset" }
+    },
+    "notificationTemplates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "private": { "type": "string", "maxLength": 120 },
+        "detailed": { "type": "string", "maxLength": 180 }
+      }
+    }
+  },
+  "$defs": {
+    "component": {
+      "enum": ["hero@1", "text@1", "notice@1", "choice-list@1", "checklist@1", "progress@1", "planner@1", "catalogue@1", "link-list@1"]
+    },
+    "color": { "type": "string", "pattern": "^#[A-Fa-f0-9]{6}$" },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["colorRoles", "typographyPreset", "densityPreset", "radiusPreset"],
+      "properties": {
+        "colorRoles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primary", "onPrimary", "surface", "onSurface", "accent"],
+          "properties": {
+            "primary": { "$ref": "#/$defs/color" },
+            "onPrimary": { "$ref": "#/$defs/color" },
+            "surface": { "$ref": "#/$defs/color" },
+            "onSurface": { "$ref": "#/$defs/color" },
+            "accent": { "$ref": "#/$defs/color" }
+          }
+        },
+        "typographyPreset": { "enum": ["system", "serif-headings", "rounded-headings"] },
+        "densityPreset": { "enum": ["compact", "comfortable", "spacious"] },
+        "radiusPreset": { "enum": ["square", "soft", "rounded"] }
+      }
+    },
+    "screen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["screenId", "title", "layout", "sections"],
+      "properties": {
+        "screenId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "layout": { "enum": ["stack", "guided", "dashboard"] },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["component", "source"],
+            "properties": {
+              "component": { "$ref": "#/$defs/component" },
+              "source": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" }
+            }
+          }
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assetId", "url", "mimeType", "sha256", "bytes"],
+      "properties": {
+        "assetId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "mimeType": { "enum": ["image/png", "image/jpeg", "image/webp"] },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "bytes": { "type": "integer", "minimum": 1, "maximum": 1048576 },
+        "width": { "type": "integer", "minimum": 1, "maximum": 4096 },
+        "height": { "type": "integer", "minimum": 1, "maximum": 4096 },
+        "alt": { "type": "string", "maxLength": 300 }
+      }
+    }
+  }
+}

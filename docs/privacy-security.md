@@ -1,0 +1,37 @@
+# Privacy and security requirements
+
+## Data minimization
+
+The baseline client has no account, advertising SDK, behavioral profile, or cross-device sync. Publisher requests are public-resource fetches and do not need cookies or credentials.
+
+The client MUST NOT send user choices, progress, reminder settings, order/preparation state, transfer payloads, or a stable device identifier to a publisher unless a future, separately consented contract explicitly introduces that data flow.
+
+## Local storage
+
+Private state is encrypted at rest where platform capabilities permit, excluded from unreviewed cloud backup, namespaced per publisher/experience, and covered by export and delete controls. Lock-screen notification text is generic by default.
+
+## Network and origin controls
+
+- HTTPS only for discovery/resources in production.
+- Reject embedded credentials and malformed/ambiguous URLs.
+- Block loopback, link-local, private-network, and unsafe redirect targets by default.
+- Revalidate every redirect and final canonical origin.
+- Do not attach publisher cookies or credentials to public resources.
+- Restrict external links and assets to manifest-declared HTTPS origins.
+- Do not expose a native JavaScript bridge to untrusted web content.
+
+## Resource limits
+
+Clients enforce maximum encoded/decoded QR size, document depth, string/collection size, asset bytes/dimensions/MIME, redirect count, recurrence horizon, pending notifications, and cache usage. Parsing and validation occur before activation.
+
+## Remote-content boundary
+
+Publisher resources cannot include JavaScript, WebAssembly, native code, plugins, raw CSS, arbitrary HTML templates, event handlers, tracking pixels, permission requests, or an executable expression/formula language. New code or native capability requires a signed app-store release.
+
+## Logging
+
+Logs and crash reports exclude URL fragments, QR payloads, local state, item/action labels derived from private selections, filesystem exports, and notification content. Diagnostics use public versions and privacy-safe error categories.
+
+## Threat model minimums
+
+Conformance fixtures must cover malicious QR payloads, unsafe network targets, redirect origin changes, duplicate JSON keys, oversized/deep documents, invalid/expired/rollback signatures, digest mismatches, unknown components, hostile asset types, external-link escapes, partial updates, and state leakage in requests/logs.

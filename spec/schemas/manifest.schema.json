@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:website-companion:schema:manifest:1.0",
+  "title": "Website Companion manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "manifestVersion",
+    "siteId",
+    "generatedAt",
+    "validUntil",
+    "publisherKeyId",
+    "experiences",
+    "resources",
+    "allowedExternalOrigins",
+    "refresh",
+    "signature"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "manifestVersion": { "type": "string", "pattern": "^[A-Za-z0-9._+-]{1,80}$" },
+    "siteId": { "type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+){1,20}$", "maxLength": 160 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "validUntil": { "type": "string", "format": "date-time" },
+    "publisherKeyId": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,80}$" },
+    "minimumClientVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "experiences": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/experience" }
+    },
+    "resources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 500,
+      "items": { "$ref": "#/$defs/resource" }
+    },
+    "allowedExternalOrigins": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": { "type": "string", "format": "uri", "pattern": "^https://[^/]+$" }
+    },
+    "refresh": { "$ref": "#/$defs/refresh" },
+    "signature": { "$ref": "#/$defs/signature" },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9.-]{2,100}$" }
+    }
+  },
+  "$defs": {
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["experienceId", "title", "capabilities", "resourceIds"],
+      "properties": {
+        "experienceId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "summary": { "type": "string", "maxLength": 500 },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 30,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*@[1-9][0-9]*$" }
+        },
+        "resourceIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" }
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceId", "resourceType", "version", "url", "mediaType", "sha256"],
+      "properties": {
+        "resourceId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+        "resourceType": {
+          "enum": ["presentation", "content", "choices", "actions", "schedule", "catalogue", "locale", "asset-index"]
+        },
+        "version": { "type": "string", "pattern": "^[A-Za-z0-9._+-]{1,80}$" },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "mediaType": { "enum": ["application/json"] },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "bytes": { "type": "integer", "minimum": 2, "maximum": 5242880 }
+      }
+    },
+    "refresh": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["suggestedIntervalSeconds", "backgroundMode", "maximumStaleSeconds"],
+      "properties": {
+        "suggestedIntervalSeconds": { "type": "integer", "minimum": 3600, "maximum": 604800 },
+        "backgroundMode": { "enum": ["disabled", "opportunistic"] },
+        "maximumStaleSeconds": { "type": "integer", "minimum": 3600, "maximum": 31536000 }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg", "keyId", "value"],
+      "properties": {
+        "alg": { "const": "Ed25519" },
+        "keyId": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,80}$" },
+        "value": { "type": "string", "pattern": "^[A-Za-z0-9_-]{86}$" }
+      }
+    }
+  }
+}

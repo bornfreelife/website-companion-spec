@@ -1,0 +1,19 @@
+{
+  "name": "website-companion-spec",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open draft contract for user-connected website companion apps",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.8.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

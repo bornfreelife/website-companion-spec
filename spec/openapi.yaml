@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Website Companion public resources
+  version: 0.1.0-draft
+  description: Domain-neutral, read-only discovery and resource surface.
+servers:
+  - url: https://demo.example
+paths:
+  /.well-known/website-companion.json:
+    get:
+      operationId: getWebsiteCompanionDiscovery
+      summary: Discover publisher identity, verification keys, and manifest location
+      responses:
+        "200":
+          description: Discovery document
+          headers:
+            ETag:
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                $ref: ./schemas/discovery.schema.json
+  /companion/manifest.json:
+    get:
+      operationId: getWebsiteCompanionManifest
+      summary: Fetch the signed current manifest
+      responses:
+        "200":
+          description: Signed manifest
+          headers:
+            ETag:
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                $ref: ./schemas/manifest.schema.json
+        "304":
+          description: Not modified
+  /companion/resources/{resourceId}.json:
+    get:
+      operationId: getWebsiteCompanionResource
+      summary: Fetch an immutable manifest-referenced resource
+      parameters:
+        - name: resourceId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-z][a-z0-9._-]{1,119}$
+      responses:
+        "200":
+          description: Declarative JSON resource whose digest is pinned by the manifest
+          headers:
+            ETag:
+              schema: { type: string }
+            Cache-Control:
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                type: object
+        "304":
+          description: Not modified

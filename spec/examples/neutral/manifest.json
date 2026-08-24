@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0",
+  "manifestVersion": "2026.08.24.1",
+  "siteId": "example.demo.community",
+  "generatedAt": "2026-08-24T00:00:00Z",
+  "validUntil": "2026-09-23T00:00:00Z",
+  "publisherKeyId": "demo-2026-01",
+  "minimumClientVersion": "1.0.0",
+  "experiences": [
+    {
+      "experienceId": "community-events",
+      "title": "Community Events",
+      "summary": "Keep a local checklist for upcoming community events.",
+      "capabilities": ["guided-content@1", "local-planner@1", "local-notifications@1"],
+      "resourceIds": ["community-events.presentation"]
+    }
+  ],
+  "resources": [
+    {
+      "resourceId": "community-events.presentation",
+      "resourceType": "presentation",
+      "version": "2026.08.24.1",
+      "url": "https://demo.example/companion/resources/community-events.presentation.json",
+      "mediaType": "application/json",
+      "sha256": "8af17a382c6a0de9d65fdf7dbbc1d564d20448d183fb372ebbff7e1612bf191f"
+    }
+  ],
+  "allowedExternalOrigins": ["https://demo.example"],
+  "refresh": {
+    "suggestedIntervalSeconds": 21600,
+    "backgroundMode": "opportunistic",
+    "maximumStaleSeconds": 604800
+  },
+  "signature": {
+    "alg": "Ed25519",
+    "keyId": "demo-2026-01",
+    "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+}
