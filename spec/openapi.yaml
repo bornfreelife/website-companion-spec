@@ -47,6 +47,12 @@ paths:
           schema:
             type: string
             pattern: ^[a-z][a-z0-9._-]{1,119}$
+        - name: version
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: ^[A-Za-z0-9._+-]{1,80}$
       responses:
         "200":
           description: Declarative JSON resource whose digest is pinned by the manifest
@@ -58,6 +64,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                oneOf:
+                  - $ref: ./schemas/presentation.schema.json
+                  - $ref: ./schemas/content.schema.json
+                  - $ref: ./schemas/choices.schema.json
+                  - $ref: ./schemas/actions.schema.json
+                  - $ref: ./schemas/schedule.schema.json
+                  - $ref: ./schemas/catalogue.schema.json
         "304":
           description: Not modified

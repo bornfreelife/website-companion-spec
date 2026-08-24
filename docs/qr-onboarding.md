@@ -54,6 +54,8 @@ The client MUST:
 
 Clients MAY implement explicit legacy adapters for existing website progress URLs. An adapter MUST parse the URL locally, quarantine its fragment, and derive an HTTPS discovery URL without fetching the fragment-bearing page. Compression is not encryption; a compressed legacy fragment remains sensitive bearer data.
 
+For ordinary fragment-free website or page URLs, clients use the bounded [discovery resolution](discovery-resolution.md) procedure. Publisher HTML is metadata-only input and is never executed as an app runtime.
+
 ## Size and fallback
 
 Clients and publishers MUST impose conservative decoded and encoded limits. Cached resources, derived UI state, notification IDs, and other reproducible data do not belong in a transfer QR. When a minimal payload exceeds reliable QR capacity, use a separately reviewed encrypted file transfer.

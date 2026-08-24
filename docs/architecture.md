@@ -12,6 +12,7 @@
 fresh disconnected client
   -> user types HTTPS URL or scans QR
   -> local parse and fragment quarantine
+  -> explicit QR discovery URL or bounded page/link discovery resolution
   -> HTTPS discovery document
   -> publisher identity/key/capability preview
   -> user confirms connection
@@ -34,6 +35,8 @@ The signed client owns:
 - schema, origin, link, resource-size, cache, signature, and compatibility enforcement.
 
 A publisher may select from supported components and provide content, theme tokens, static assets, schedules, and external links. A publisher cannot add executable behavior or a new native capability without a client/store release.
+
+Choice-dependent visibility is declarative rather than executable. Version 1 permits only the documented scalar predicates and bounded `all`, `any`, and `not` groups. The client evaluates them against namespaced local choices. There is no remote expression language, dynamic property access, formula evaluator, or publisher callback.
 
 ## State separation
 

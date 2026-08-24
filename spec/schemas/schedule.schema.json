@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:website-companion:schema:schedule:1.0",
+  "title": "Website Companion schedule resource",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "resourceType", "resourceId", "version", "timeAnchors", "steps", "items"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "resourceType": { "const": "schedule" },
+    "resourceId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+    "version": { "type": "string", "pattern": "^[A-Za-z0-9._+-]{1,80}$" },
+    "timeAnchors": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "items": { "$ref": "#/$defs/timeAnchor" }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 500,
+      "items": { "$ref": "#/$defs/step" }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5000,
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "timeAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["anchorId", "label", "sort"],
+      "properties": {
+        "anchorId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "label": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "sort": { "type": "integer", "minimum": 0, "maximum": 100000 }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stepId", "order", "title", "itemIds"],
+      "properties": {
+        "stepId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "order": { "type": "integer", "minimum": 0, "maximum": 100000 },
+        "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "summary": { "type": "string", "maxLength": 3000 },
+        "stage": { "type": "string", "maxLength": 120 },
+        "itemIds": {
+          "type": "array",
+          "maxItems": 1000,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" }
+        }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scheduleId", "stepId", "title", "actionKind", "timeAnchor", "reminder"],
+      "properties": {
+        "scheduleId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+        "stepId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "actionId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "actionKind": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "timeAnchor": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "sort": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "instructions": { "type": "string", "maxLength": 30000 },
+        "details": { "type": "string", "maxLength": 30000 },
+        "doseByStage": {
+          "type": "object",
+          "maxProperties": 20,
+          "propertyNames": { "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+          "additionalProperties": { "type": ["string", "null"], "maxLength": 3000 }
+        },
+        "links": {
+          "type": "array",
+          "maxItems": 30,
+          "items": { "$ref": "#/$defs/link" }
+        },
+        "visibility": { "$ref": "urn:website-companion:schema:condition:1.0#/$defs/condition" },
+        "reminder": { "$ref": "#/$defs/reminder" }
+      }
+    },
+    "reminder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "userConfirmationRequired"],
+      "properties": {
+        "mode": { "const": "user-configured" },
+        "userConfirmationRequired": { "const": true },
+        "shortText": { "type": "string", "maxLength": 180 },
+        "suggestedRecurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["frequency", "interval"],
+          "properties": {
+            "frequency": { "enum": ["daily", "weekly", "interval-days"] },
+            "interval": { "type": "integer", "minimum": 1, "maximum": 365 }
+          }
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "url"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" }
+      }
+    }
+  }
+}

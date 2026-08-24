@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "resourceType": "choices",
+  "resourceId": "community-events.choices",
+  "version": "2026.08.25.1",
+  "choiceSets": [
+    {
+      "choiceId": "event-interests",
+      "title": "Which event types interest you?",
+      "description": "Selections stay on this device and filter the public event checklist locally.",
+      "input": "multiple",
+      "required": false,
+      "localOnly": true,
+      "default": ["workshop"],
+      "options": [
+        { "value": "workshop", "label": "Workshops" },
+        { "value": "market", "label": "Markets" }
+      ]
+    }
+  ]
+}

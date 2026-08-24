@@ -14,6 +14,8 @@ A conforming mobile client starts disconnected. It does not contain a default pu
 
 Publishers provide signed, declarative JSON resources. The installed app provides and executes every component, interaction primitive, local-storage rule, accessibility requirement, native permission flow, and notification scheduler.
 
+Local filtering uses only the contract's bounded condition vocabulary: comparisons against explicitly declared local choice IDs combined with `all`, `any`, and `not`. Publishers cannot provide scripts, expressions, functions, dynamic property access, network actions, or other executable rule mechanisms.
+
 Publisher resources may provide:
 
 - identity, terms, privacy, support, and provenance;
@@ -31,14 +33,14 @@ Publisher resources must not provide executable native code, JavaScript, WebAsse
 - Optional transfer fragments are quarantined locally before any network request and are never sent to the publisher.
 - A failed, unsigned, incompatible, or partial update cannot replace the last-known-good resource set.
 
-See [Architecture](docs/architecture.md), [client conformance](docs/client-conformance.md), [QR onboarding](docs/qr-onboarding.md), [refresh and activation](docs/refresh.md), [signing and trust](docs/signing.md), and [privacy and security](docs/privacy-security.md).
+See [Architecture](docs/architecture.md), [discovery resolution](docs/discovery-resolution.md), [client conformance](docs/client-conformance.md), [QR onboarding](docs/qr-onboarding.md), [refresh and activation](docs/refresh.md), [signing and trust](docs/signing.md), and [privacy and security](docs/privacy-security.md).
 
 ## Repository layout
 
 ```text
 docs/                    Normative design and security requirements
 spec/openapi.yaml        HTTP surface
-spec/schemas/            JSON Schemas
+spec/schemas/            JSON Schemas for discovery, manifests, presentation, content, choices, actions, schedules, and catalogues
 spec/examples/neutral/   Domain-neutral reference publisher
 scripts/                 Draft conformance checks
 ```

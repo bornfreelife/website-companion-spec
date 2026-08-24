@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0",
+  "resourceType": "catalogue",
+  "resourceId": "community-events.catalogue",
+  "version": "2026.08.25.1",
+  "regions": ["DEMO"],
+  "offers": [
+    {
+      "offerId": "events.offers.workshop-registration",
+      "offerKind": "service",
+      "title": "Workshop registration information",
+      "category": "Events",
+      "description": "Open the publisher page to review current availability.",
+      "vendor": "Example Community Publisher",
+      "url": "https://demo.example/events/workshops",
+      "regions": ["DEMO"],
+      "visibility": {
+        "choiceId": "event-interests",
+        "operator": "contains",
+        "value": "workshop"
+      }
+    }
+  ]
+}

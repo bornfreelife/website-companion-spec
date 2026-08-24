@@ -28,6 +28,8 @@ Clients enforce maximum encoded/decoded QR size, document depth, string/collecti
 
 Publisher resources cannot include JavaScript, WebAssembly, native code, plugins, raw CSS, arbitrary HTML templates, event handlers, tracking pixels, permission requests, or an executable expression/formula language. New code or native capability requires a signed app-store release.
 
+The bounded condition schema can compare only declared local choice values using the fixed operators in the contract. Clients reject unknown operators, unknown choice IDs, excessive nesting, type mismatches, and conditions outside the signed resource set.
+
 ## Logging
 
 Logs and crash reports exclude URL fragments, QR payloads, local state, item/action labels derived from private selections, filesystem exports, and notification content. Diagnostics use public versions and privacy-safe error categories.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "manifestVersion": "2026.08.24.1",
+  "manifestVersion": "2026.08.25.1",
   "siteId": "example.demo.community",
   "generatedAt": "2026-08-24T00:00:00Z",
   "validUntil": "2026-09-23T00:00:00Z",
@@ -11,8 +11,15 @@
       "experienceId": "community-events",
       "title": "Community Events",
       "summary": "Keep a local checklist for upcoming community events.",
-      "capabilities": ["guided-content@1", "local-planner@1", "local-notifications@1"],
-      "resourceIds": ["community-events.presentation"]
+      "capabilities": ["guided-content@1", "local-choices@1", "local-planner@1", "catalogue@1", "local-notifications@1"],
+      "resourceIds": [
+        "community-events.presentation",
+        "community-events.content",
+        "community-events.choices",
+        "community-events.actions",
+        "community-events.schedule",
+        "community-events.catalogue"
+      ]
     }
   ],
   "resources": [
@@ -20,9 +27,55 @@
       "resourceId": "community-events.presentation",
       "resourceType": "presentation",
       "version": "2026.08.24.1",
-      "url": "https://demo.example/companion/resources/community-events.presentation.json",
+      "url": "https://demo.example/companion/resources/community-events.presentation.json?version=2026.08.24.1",
       "mediaType": "application/json",
-      "sha256": "8af17a382c6a0de9d65fdf7dbbc1d564d20448d183fb372ebbff7e1612bf191f"
+      "sha256": "8af17a382c6a0de9d65fdf7dbbc1d564d20448d183fb372ebbff7e1612bf191f",
+      "bytes": 1128
+    },
+    {
+      "resourceId": "community-events.content",
+      "resourceType": "content",
+      "version": "2026.08.25.1",
+      "url": "https://demo.example/companion/resources/community-events.content.json?version=2026.08.25.1",
+      "mediaType": "application/json",
+      "sha256": "ae99c6e30ebb71775c99eb05b0418f9b83a0cec24b3915a13c5fe218fb610d53",
+      "bytes": 857
+    },
+    {
+      "resourceId": "community-events.choices",
+      "resourceType": "choices",
+      "version": "2026.08.25.1",
+      "url": "https://demo.example/companion/resources/community-events.choices.json?version=2026.08.25.1",
+      "mediaType": "application/json",
+      "sha256": "5e0d7d00299e28d7beff0857fbca0d26088e9b9ee0c4c775d16a3aa75a3827ae",
+      "bytes": 595
+    },
+    {
+      "resourceId": "community-events.actions",
+      "resourceType": "actions",
+      "version": "2026.08.25.1",
+      "url": "https://demo.example/companion/resources/community-events.actions.json?version=2026.08.25.1",
+      "mediaType": "application/json",
+      "sha256": "a4fa5abafe9252f91d17f74fa0113dc8048d59c70755687b108d7f75b3efbfbd",
+      "bytes": 908
+    },
+    {
+      "resourceId": "community-events.schedule",
+      "resourceType": "schedule",
+      "version": "2026.08.25.1",
+      "url": "https://demo.example/companion/resources/community-events.schedule.json?version=2026.08.25.1",
+      "mediaType": "application/json",
+      "sha256": "cc0f4cebf8856f402f065a7a44950a6c2765d721f3a494815a44cf236b0545ff",
+      "bytes": 1700
+    },
+    {
+      "resourceId": "community-events.catalogue",
+      "resourceType": "catalogue",
+      "version": "2026.08.25.1",
+      "url": "https://demo.example/companion/resources/community-events.catalogue.json?version=2026.08.25.1",
+      "mediaType": "application/json",
+      "sha256": "aa998027dec70eb06605bbbc19cb8ef5f3cd708ddbcb265eb0a95d45117869c5",
+      "bytes": 692
     }
   ],
   "allowedExternalOrigins": ["https://demo.example"],

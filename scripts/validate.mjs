@@ -12,19 +12,51 @@ const loadJson = async (relativePath) => JSON.parse(await readFile(path.join(roo
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 addFormats(ajv);
 
+const schemaPaths = [
+  'spec/schemas/condition.schema.json',
+  'spec/schemas/discovery.schema.json',
+  'spec/schemas/manifest.schema.json',
+  'spec/schemas/presentation.schema.json',
+  'spec/schemas/content.schema.json',
+  'spec/schemas/choices.schema.json',
+  'spec/schemas/actions.schema.json',
+  'spec/schemas/schedule.schema.json',
+  'spec/schemas/catalogue.schema.json'
+];
+
+for (const schemaPath of schemaPaths) {
+  ajv.addSchema(await loadJson(schemaPath));
+}
+
 const cases = [
   ['spec/schemas/discovery.schema.json', 'spec/examples/neutral/discovery.json'],
   ['spec/schemas/manifest.schema.json', 'spec/examples/neutral/manifest.json'],
-  ['spec/schemas/presentation.schema.json', 'spec/examples/neutral/presentation.json']
+  ['spec/schemas/presentation.schema.json', 'spec/examples/neutral/presentation.json'],
+  ['spec/schemas/content.schema.json', 'spec/examples/neutral/content.json'],
+  ['spec/schemas/choices.schema.json', 'spec/examples/neutral/choices.json'],
+  ['spec/schemas/actions.schema.json', 'spec/examples/neutral/actions.json'],
+  ['spec/schemas/schedule.schema.json', 'spec/examples/neutral/schedule.json'],
+  ['spec/schemas/catalogue.schema.json', 'spec/examples/neutral/catalogue.json']
 ];
 
 for (const [schemaPath, examplePath] of cases) {
   const schema = await loadJson(schemaPath);
   const example = await loadJson(examplePath);
-  const validate = ajv.compile(schema);
+  const validate = ajv.getSchema(schema.$id);
+  if (!validate) {
+    throw new Error(`Schema was not registered: ${schemaPath}`);
+  }
   if (!validate(example)) {
     throw new Error(`${examplePath} failed ${schemaPath}:\n${JSON.stringify(validate.errors, null, 2)}`);
   }
+}
+
+const conditionSchema = await loadJson('spec/schemas/condition.schema.json');
+const validateCondition = ajv.getSchema(conditionSchema.$id + '#/$defs/condition');
+if (!validateCondition
+  || validateCondition({ choiceId: 'example-choice', operator: 'equals' })
+  || validateCondition({ choiceId: 'example-choice', operator: 'truthy', value: true })) {
+  throw new Error('Condition schema did not enforce operator/value semantics');
 }
 
 const openapi = parseYaml(await readFile(path.join(root, 'spec/openapi.yaml'), 'utf8'));
@@ -53,11 +85,33 @@ if (new URL(discoveryDocument.publisher.origin).hostname !== 'demo.example') {
 if (manifest.experiences.some((experience) => experience.experienceId !== 'community-events')) {
   throw new Error('Neutral reference fixture contains an unexpected experience');
 }
-const presentationBytes = await readFile(path.join(root, 'spec/examples/neutral/presentation.json'));
-const presentationDigest = createHash('sha256').update(presentationBytes).digest('hex');
-const presentationRef = manifest.resources.find((resource) => resource.resourceId === 'community-events.presentation');
-if (!presentationRef || presentationRef.sha256 !== presentationDigest) {
-  throw new Error(`Presentation digest mismatch; expected ${presentationDigest}`);
+const neutralResourceFiles = {
+  'community-events.presentation': 'presentation.json',
+  'community-events.content': 'content.json',
+  'community-events.choices': 'choices.json',
+  'community-events.actions': 'actions.json',
+  'community-events.schedule': 'schedule.json',
+  'community-events.catalogue': 'catalogue.json'
+};
+
+for (const [resourceId, filename] of Object.entries(neutralResourceFiles)) {
+  const bytes = await readFile(path.join(root, 'spec/examples/neutral', filename));
+  const digest = createHash('sha256').update(bytes).digest('hex');
+  const reference = manifest.resources.find((resource) => resource.resourceId === resourceId);
+  if (!reference || reference.sha256 !== digest || reference.bytes !== bytes.byteLength) {
+    throw new Error(`${resourceId} digest/size mismatch; expected ${digest} and ${bytes.byteLength} bytes`);
+  }
+  if (new URL(reference.url).searchParams.get('version') !== reference.version) {
+    throw new Error(`${resourceId} URL does not pin its declared immutable version`);
+  }
+}
+
+for (const experience of manifest.experiences) {
+  for (const resourceId of experience.resourceIds) {
+    if (!manifest.resources.some((resource) => resource.resourceId === resourceId)) {
+      throw new Error(`${experience.experienceId} references missing resource ${resourceId}`);
+    }
+  }
 }
 
 const markdownFiles = ['README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'GOVERNANCE.md', 'SECURITY.md'];
@@ -82,4 +136,4 @@ for (const markdownPath of markdownFiles) {
   }
 }
 
-console.log('Validated schemas, neutral examples, QR boundary, OpenAPI structure, resource digest, and local links.');
+console.log('Validated schemas, neutral examples, QR boundary, OpenAPI structure, resource digests, and local links.');

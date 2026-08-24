@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0",
+  "resourceType": "schedule",
+  "resourceId": "community-events.schedule",
+  "version": "2026.08.25.1",
+  "timeAnchors": [
+    { "anchorId": "morning", "label": "Morning", "sort": 100 },
+    { "anchorId": "flexible", "label": "Any time", "sort": 900 }
+  ],
+  "steps": [
+    {
+      "stepId": "event-preparation",
+      "order": 1,
+      "title": "Event preparation",
+      "summary": "Choose the tasks that are useful for your event.",
+      "itemIds": ["events.schedule.bring-water", "events.schedule.review-accessibility"]
+    }
+  ],
+  "items": [
+    {
+      "scheduleId": "events.schedule.bring-water",
+      "stepId": "event-preparation",
+      "actionId": "events.actions.bring-water",
+      "title": "Pack a water bottle",
+      "actionKind": "task",
+      "timeAnchor": "morning",
+      "sort": 100,
+      "visibility": {
+        "any": [
+          { "choiceId": "event-interests", "operator": "contains", "value": "workshop" },
+          { "choiceId": "event-interests", "operator": "contains", "value": "market" }
+        ]
+      },
+      "reminder": {
+        "mode": "user-configured",
+        "userConfirmationRequired": true,
+        "shortText": "Review an upcoming event task"
+      }
+    },
+    {
+      "scheduleId": "events.schedule.review-accessibility",
+      "stepId": "event-preparation",
+      "actionId": "events.actions.review-accessibility",
+      "title": "Review accessibility information",
+      "actionKind": "reference",
+      "timeAnchor": "flexible",
+      "sort": 200,
+      "reminder": {
+        "mode": "user-configured",
+        "userConfirmationRequired": true,
+        "shortText": "Review an upcoming event task"
+      }
+    }
+  ]
+}

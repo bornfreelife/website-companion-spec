@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0",
+  "resourceType": "content",
+  "resourceId": "community-events.content",
+  "version": "2026.08.25.1",
+  "entries": [
+    {
+      "contentId": "events.introduction",
+      "kind": "text",
+      "title": "Plan for a community event",
+      "summary": "Keep the event details and your own preparation checklist together on this device.",
+      "body": "Choose the event types you want to see, review the public event information, and decide which preparation reminders you want to schedule locally."
+    },
+    {
+      "contentId": "events.links",
+      "kind": "reference",
+      "title": "Publisher information",
+      "links": [
+        { "label": "Event accessibility", "url": "https://demo.example/events/accessibility" },
+        { "label": "Contact the publisher", "url": "https://demo.example/support" }
+      ]
+    }
+  ]
+}

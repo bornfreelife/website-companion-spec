@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "resourceType": "actions",
+  "resourceId": "community-events.actions",
+  "version": "2026.08.25.1",
+  "actions": [
+    {
+      "actionId": "events.actions.bring-water",
+      "title": "Pack a water bottle",
+      "actionKind": "task",
+      "category": "Preparation",
+      "summary": "Add this to your local event checklist.",
+      "visibility": {
+        "any": [
+          { "choiceId": "event-interests", "operator": "contains", "value": "workshop" },
+          { "choiceId": "event-interests", "operator": "contains", "value": "market" }
+        ]
+      }
+    },
+    {
+      "actionId": "events.actions.review-accessibility",
+      "title": "Review accessibility information",
+      "actionKind": "reference",
+      "category": "Planning",
+      "links": [
+        { "label": "Event accessibility", "url": "https://demo.example/events/accessibility" }
+      ]
+    }
+  ]
+}
