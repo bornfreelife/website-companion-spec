@@ -2,15 +2,17 @@
 
 Status: draft.
 
-## Canonical connection payload
+## Canonical connection URL
 
-The provisional in-app scanner format is:
+The connection QR MUST contain an ordinary HTTPS URL on a domain controlled by the client operator. The complete connection envelope is encoded in the fragment so it is not included in an HTTP request to the handoff server:
 
 ```text
-wcx://connect?version=1&discovery=https%3A%2F%2Fdemo.example%2F.well-known%2Fwebsite-companion.json&experience=community-events
+https://companion-client.example/connect/#version=1&discovery=https%3A%2F%2Fdemo.example%2F.well-known%2Fwebsite-companion.json&experience=community-events
 ```
 
-`wcx` is a provisional identifier for in-app parsing, not a registered operating-system URL scheme. An implementation may separately provide an app-owned universal link, but it MUST resolve to the same fields and security flow.
+The client operator associates that HTTPS origin and path with its signed iOS and Android apps using Universal Links and App Links. A phone's existing camera or QR scanner can therefore open the app without the client requesting camera permission or embedding a barcode scanner. If the app is not installed, the same URL opens a minimal browser fallback controlled by the client operator.
+
+The handoff origin identifies the client, not a preferred publisher. It MUST NOT supply a publisher URL, silently connect a publisher, receive the fragment through application requests, or change the connection fields. A publisher may offer several explicitly labelled client handoffs when multiple conforming clients exist.
 
 Required fields:
 
@@ -20,7 +22,7 @@ Required fields:
 Optional fields:
 
 - `experience`: stable experience ID to highlight after discovery
-- `#transfer=...`: opaque local-only transfer payload
+- `transfer`: opaque local-only transfer payload in the same URL fragment
 
 Unknown required fields, duplicate security-sensitive fields, embedded URL credentials, non-HTTPS discovery, invalid encodings, and oversized payloads MUST be rejected.
 
@@ -40,9 +42,9 @@ Progress-transfer encryption is not standardized in 0.1. Implementations MUST NO
 
 The client MUST:
 
-1. decode the QR in memory without navigating to it;
-2. remove and quarantine the fragment before any network operation or log event;
-3. validate scheme, length, URL, and target-network policy;
+1. receive the activated HTTPS Universal Link/App Link without requesting camera access, or accept the same URL through an explicit paste/share flow;
+2. parse and quarantine the fragment before any publisher network operation or log event;
+3. validate handoff origin/path, scheme, length, fields, discovery URL, and target-network policy;
 4. fetch only the fragment-free discovery URL;
 5. show publisher identity, canonical origin, capabilities, terms/privacy/support, and refresh behavior;
 6. connect only after user confirmation;
@@ -50,7 +52,9 @@ The client MUST:
 8. preview and import an optional transfer locally;
 9. never transmit the transfer to the publisher.
 
-## Legacy HTTPS URLs
+The browser fallback MUST remain useful without reading or transmitting publisher state. It may explain the connection, link to official app listings, and provide a user-initiated app handoff. It MUST NOT add the fragment to analytics, diagnostics, referrers, form submissions, or server requests. Implementations SHOULD avoid third-party scripts on this page.
+
+## Legacy and publisher HTTPS URLs
 
 Clients MAY implement explicit legacy adapters for existing website progress URLs. An adapter MUST parse the URL locally, quarantine its fragment, and derive an HTTPS discovery URL without fetching the fragment-bearing page. Compression is not encryption; a compressed legacy fragment remains sensitive bearer data.
 
@@ -58,4 +62,4 @@ For ordinary fragment-free website or page URLs, clients use the bounded [discov
 
 ## Size and fallback
 
-Clients and publishers MUST impose conservative decoded and encoded limits. Cached resources, derived UI state, notification IDs, and other reproducible data do not belong in a transfer QR. When a minimal payload exceeds reliable QR capacity, use a separately reviewed encrypted file transfer.
+Clients and publishers MUST impose conservative encoded and decoded limits. Cached resources, derived UI state, notification IDs, and other reproducible data do not belong in a transfer QR. When a minimal payload exceeds reliable QR capacity, use a separately reviewed encrypted file transfer.

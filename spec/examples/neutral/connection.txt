@@ -1,1 +1,1 @@
-wcx://connect?version=1&discovery=https%3A%2F%2Fdemo.example%2F.well-known%2Fwebsite-companion.json&experience=community-events
+https://companion-client.example/connect/#version=1&discovery=https%3A%2F%2Fdemo.example%2F.well-known%2Fwebsite-companion.json&experience=community-events

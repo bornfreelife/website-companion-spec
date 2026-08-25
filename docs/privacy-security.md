@@ -22,7 +22,9 @@ Private state is encrypted at rest where platform capabilities permit, excluded 
 
 ## Resource limits
 
-Clients enforce maximum encoded/decoded QR size, document depth, string/collection size, asset bytes/dimensions/MIME, redirect count, recurrence horizon, pending notifications, and cache usage. Parsing and validation occur before activation.
+Clients enforce maximum encoded/decoded connection size, document depth, string/collection size, asset bytes/dimensions/MIME, redirect count, recurrence horizon, pending notifications, and cache usage. Parsing and validation occur before activation.
+
+The app-owned HTTPS handoff carries its fields in the URL fragment. The handoff service MUST NOT require an account or attempt to collect the fragment. Its browser fallback SHOULD avoid third-party scripts and analytics. The client MUST validate every field received from a Universal Link or App Link as untrusted input before using the discovery URL.
 
 ## Remote-content boundary
 
@@ -32,8 +34,8 @@ The bounded condition schema can compare only declared local choice values using
 
 ## Logging
 
-Logs and crash reports exclude URL fragments, QR payloads, local state, item/action labels derived from private selections, filesystem exports, and notification content. Diagnostics use public versions and privacy-safe error categories.
+Logs and crash reports exclude URL fragments, connection payloads, local state, item/action labels derived from private selections, filesystem exports, and notification content. Diagnostics use public versions and privacy-safe error categories.
 
 ## Threat model minimums
 
-Conformance fixtures must cover malicious QR payloads, unsafe network targets, redirect origin changes, duplicate JSON keys, oversized/deep documents, invalid/expired/rollback signatures, digest mismatches, unknown components, hostile asset types, external-link escapes, partial updates, and state leakage in requests/logs.
+Conformance fixtures must cover malicious handoff payloads, invalid handoff origins/paths, unsafe network targets, redirect origin changes, duplicate fields and JSON keys, oversized/deep documents, invalid/expired/rollback signatures, digest mismatches, unknown components, hostile asset types, external-link escapes, partial updates, and state leakage in requests/logs.

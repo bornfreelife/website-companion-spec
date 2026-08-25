@@ -10,7 +10,7 @@ The app extends compatible, content-rich website experiences to mobile devices. 
 
 ## Core boundary
 
-A conforming mobile client starts disconnected. It does not contain a default publisher, private registry, domain-specific vocabulary, hidden endpoint, or remotely downloaded application runtime. A user explicitly enters a compatible HTTPS URL or scans a connection QR before the client makes a publisher request.
+A conforming mobile client starts disconnected. It does not contain a default publisher, private registry, domain-specific vocabulary, hidden endpoint, or remotely downloaded application runtime. A user explicitly enters a compatible HTTPS URL or activates a connection URL before the client makes a publisher request. QR codes contain that ordinary HTTPS handoff URL so the operating system's camera can open the app without an in-app camera permission or scanner.
 
 Publishers provide signed, declarative JSON resources. The installed app provides and executes every component, interaction primitive, local-storage rule, accessibility requirement, native permission flow, and notification scheduler.
 

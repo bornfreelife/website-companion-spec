@@ -10,9 +10,9 @@
 
 ```text
 fresh disconnected client
-  -> user types HTTPS URL or scans QR
+  -> user types HTTPS URL or activates an HTTPS connection link/QR
   -> local parse and fragment quarantine
-  -> explicit QR discovery URL or bounded page/link discovery resolution
+  -> explicit handoff-fragment discovery URL or bounded page/link discovery resolution
   -> HTTPS discovery document
   -> publisher identity/key/capability preview
   -> user confirms connection
@@ -22,7 +22,7 @@ fresh disconnected client
   -> encrypted namespaced local state
 ```
 
-No publisher request occurs before the user initiates a connection. The client does not send the scanned fragment, local answers, progress, reminder configuration, or a cross-publisher identifier during discovery or refresh.
+No publisher request occurs before the user initiates a connection. The client does not send the handoff fragment, local answers, progress, reminder configuration, or a cross-publisher identifier during discovery or refresh. The app uses its associated HTTPS handoff domain rather than requesting camera permission or embedding a QR decoder.
 
 ## Fixed runtime, declarative resources
 

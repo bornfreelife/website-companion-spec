@@ -66,15 +66,22 @@ if (openapi.openapi !== '3.1.0' || !openapi.paths?.['/.well-known/website-compan
 
 const connection = (await readFile(path.join(root, 'spec/examples/neutral/connection.txt'), 'utf8')).trim();
 const connectionUrl = new URL(connection);
-if (connectionUrl.protocol !== 'wcx:' || connectionUrl.hostname !== 'connect') {
-  throw new Error('Neutral connection QR is not a wcx://connect payload');
+if (connectionUrl.protocol !== 'https:' || connectionUrl.hostname !== 'companion-client.example' || connectionUrl.pathname !== '/connect/') {
+  throw new Error('Neutral connection QR is not an HTTPS client handoff URL');
 }
-if (connectionUrl.hash) {
-  throw new Error('Connection-only QR must not contain a transfer fragment');
+if (connectionUrl.search) {
+  throw new Error('Connection fields must not be sent to the handoff server as a query');
 }
-const discovery = connectionUrl.searchParams.get('discovery');
+const connectionFields = new URLSearchParams(connectionUrl.hash.slice(1));
+if (connectionFields.get('version') !== '1' || connectionFields.has('transfer')) {
+  throw new Error('Connection-only QR has an invalid version or contains progress');
+}
+const discovery = connectionFields.get('discovery');
 if (!discovery || new URL(discovery).protocol !== 'https:') {
   throw new Error('Connection QR must contain an HTTPS discovery URL');
+}
+if (connectionFields.get('experience') !== 'community-events') {
+  throw new Error('Connection QR must contain the expected optional experience ID');
 }
 
 const manifest = await loadJson('spec/examples/neutral/manifest.json');
