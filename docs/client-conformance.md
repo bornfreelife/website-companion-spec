@@ -11,6 +11,7 @@ A conforming client implementation satisfies all of the following:
 - Remote resources are declarative and cannot add undocumented native behavior.
 - Connection, validation, rendering, refresh, and failure behavior do not vary based on publisher identity.
 - Locally stored state remains isolated by publisher and experience.
+- Routine-relative reminders use publisher-declared routine points and offsets plus user-entered local times; clients never infer timing from publisher prose or labels.
 - The implementation accurately describes manual connections, publisher-controlled content, local state, refresh behavior, and notifications.
 
 Passing this checklist demonstrates contract behavior only. It is not certification of an implementation or connected publisher.

@@ -86,11 +86,23 @@ if (connectionFields.get('experience') !== 'community-events') {
 
 const manifest = await loadJson('spec/examples/neutral/manifest.json');
 const discoveryDocument = await loadJson('spec/examples/neutral/discovery.json');
+const neutralSchedule = await loadJson('spec/examples/neutral/schedule.json');
 if (new URL(discoveryDocument.publisher.origin).hostname !== 'demo.example') {
   throw new Error('Neutral reference fixture must use the reserved demonstration origin');
 }
 if (manifest.experiences.some((experience) => experience.experienceId !== 'community-events')) {
   throw new Error('Neutral reference fixture contains an unexpected experience');
+}
+const routinePointIds = new Set(neutralSchedule.routinePoints?.map((point) => point.routinePointId) ?? []);
+if (routinePointIds.size !== (neutralSchedule.routinePoints?.length ?? 0)) {
+  throw new Error('Neutral schedule contains duplicate routine-point IDs');
+}
+const timeAnchorIds = new Set(neutralSchedule.timeAnchors.map((anchor) => anchor.anchorId));
+if (timeAnchorIds.size !== neutralSchedule.timeAnchors.length) {
+  throw new Error('Neutral schedule contains duplicate time-anchor IDs');
+}
+if (neutralSchedule.timeAnchors.some((anchor) => anchor.relativeTo && !routinePointIds.has(anchor.relativeTo.routinePointId))) {
+  throw new Error('Neutral schedule contains an unknown routine-point relationship');
 }
 const neutralResourceFiles = {
   'community-events.presentation': 'presentation.json',

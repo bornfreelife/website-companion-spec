@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "manifestVersion": "2026.08.25.1",
+  "manifestVersion": "2026.08.26.1",
   "siteId": "example.demo.community",
   "generatedAt": "2026-08-24T00:00:00Z",
   "validUntil": "2026-09-23T00:00:00Z",
@@ -62,11 +62,11 @@
     {
       "resourceId": "community-events.schedule",
       "resourceType": "schedule",
-      "version": "2026.08.25.1",
-      "url": "https://demo.example/companion/resources/community-events.schedule.json?version=2026.08.25.1",
+      "version": "2026.08.26.1",
+      "url": "https://demo.example/companion/resources/community-events.schedule.json?version=2026.08.26.1",
       "mediaType": "application/json",
-      "sha256": "cc0f4cebf8856f402f065a7a44950a6c2765d721f3a494815a44cf236b0545ff",
-      "bytes": 1700
+      "sha256": "6b73864471fc3f3071fc8d068130aeb0731652cc8a26c52c2e19e05157ec5765",
+      "bytes": 1897
     },
     {
       "resourceId": "community-events.catalogue",
