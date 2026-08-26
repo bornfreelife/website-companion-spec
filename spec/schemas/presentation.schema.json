@@ -68,6 +68,12 @@
             "accent": { "$ref": "#/$defs/color" }
           }
         },
+        "groupAccentPalette": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/color" }
+        },
         "typographyPreset": { "enum": ["system", "serif-headings", "rounded-headings"] },
         "densityPreset": { "enum": ["compact", "comfortable", "spacious"] },
         "radiusPreset": { "enum": ["square", "soft", "rounded"] }
