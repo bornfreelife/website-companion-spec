@@ -65,8 +65,8 @@
       "version": "2026.08.26.1",
       "url": "https://demo.example/companion/resources/community-events.schedule.json?version=2026.08.26.1",
       "mediaType": "application/json",
-      "sha256": "6b73864471fc3f3071fc8d068130aeb0731652cc8a26c52c2e19e05157ec5765",
-      "bytes": 1897
+      "sha256": "e4226102f32b0ef4ab0c6d185bdf978fc0ecd1c660c64734e7ca8ef47e7437ee",
+      "bytes": 1999
     },
     {
       "resourceId": "community-events.catalogue",

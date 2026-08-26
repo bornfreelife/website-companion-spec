@@ -4,7 +4,7 @@
   "resourceId": "community-events.schedule",
   "version": "2026.08.26.1",
   "routinePoints": [
-    { "routinePointId": "day-start", "label": "Day starts", "sort": 100 }
+    { "routinePointId": "day-start", "label": "Day starts", "sort": 100, "suggestedLocalTime": "09:00" }
   ],
   "timeAnchors": [
     {
@@ -33,6 +33,7 @@
       "actionKind": "task",
       "timeAnchor": "morning",
       "sort": 100,
+      "activation": { "scope": "from-step", "seriesId": "event-kit" },
       "visibility": {
         "any": [
           { "choiceId": "event-interests", "operator": "contains", "value": "workshop" },

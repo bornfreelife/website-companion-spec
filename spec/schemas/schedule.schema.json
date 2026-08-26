@@ -42,7 +42,8 @@
       "properties": {
         "routinePointId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
         "label": { "type": "string", "minLength": 1, "maxLength": 120 },
-        "sort": { "type": "integer", "minimum": 0, "maximum": 100000 }
+        "sort": { "type": "integer", "minimum": 0, "maximum": 100000 },
+        "suggestedLocalTime": { "type": "string", "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$" }
       }
     },
     "timeAnchor": {
@@ -108,8 +109,20 @@
           "maxItems": 30,
           "items": { "$ref": "#/$defs/link" }
         },
+        "activation": { "$ref": "#/$defs/activation" },
         "visibility": { "$ref": "urn:website-companion:schema:condition:1.0#/$defs/condition" },
         "reminder": { "$ref": "#/$defs/reminder" }
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope"],
+      "properties": {
+        "scope": { "enum": ["current-step", "from-step"] },
+        "seriesId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+        "replacesEarlier": { "type": "boolean" },
+        "retainWhenReplaced": { "type": "boolean" }
       }
     },
     "reminder": {

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added optional publisher-suggested routine times and structured cumulative-step/replacement semantics without giving publishers notification permission.
 - Added optional publisher-declared routine points and structured relative-time relationships so users can set a small daily routine while clients derive planner-group reminder times without parsing prose.
 - Replaced the provisional custom-scheme/in-app scanner payload with an app-associated HTTPS handoff URL whose connection fields remain in the fragment.
 - Made operating-system camera scanning the default QR path so reference clients do not require camera permission or a barcode-scanner dependency.
