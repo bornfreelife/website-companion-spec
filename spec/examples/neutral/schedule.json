@@ -2,10 +2,11 @@
   "schemaVersion": "1.0",
   "resourceType": "schedule",
   "resourceId": "community-events.schedule",
-  "version": "2026.08.26.1",
+  "version": "2026.08.26.2",
   "routinePoints": [
     { "routinePointId": "day-start", "label": "Day starts", "sort": 100, "suggestedLocalTime": "09:00" }
   ],
+  "completionPolicy": { "scope": "daily", "resetAtRoutinePointId": "day-start" },
   "timeAnchors": [
     {
       "anchorId": "morning",

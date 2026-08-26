@@ -104,6 +104,9 @@ if (timeAnchorIds.size !== neutralSchedule.timeAnchors.length) {
 if (neutralSchedule.timeAnchors.some((anchor) => anchor.relativeTo && !routinePointIds.has(anchor.relativeTo.routinePointId))) {
   throw new Error('Neutral schedule contains an unknown routine-point relationship');
 }
+if (neutralSchedule.completionPolicy && !routinePointIds.has(neutralSchedule.completionPolicy.resetAtRoutinePointId)) {
+  throw new Error('Neutral schedule completion policy refers to an unknown routine point');
+}
 const neutralResourceFiles = {
   'community-events.presentation': 'presentation.json',
   'community-events.content': 'content.json',
