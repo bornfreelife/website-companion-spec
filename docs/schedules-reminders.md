@@ -35,6 +35,22 @@ Clients that implement this policy MUST:
 
 If `completionPolicy` is absent, planner completion does not reset automatically.
 
+## User-confirmed sequential progression
+
+A schedule may declare `progressionPolicy.mode: sequential-user-confirmed`. The client then presents only adjacent backward navigation and an explicit user-confirmed advance action instead of a control that jumps directly to any future step. Optional publisher labels remain bounded text rendered by the fixed client. `resetDailyCompletionOnAdvance: true` asks the client to start a fresh local daily checklist when the user advances; it does not enable reminders or mark any item complete.
+
+Individual steps may carry the same bounded `visibility` conditions as actions and schedule items. Clients evaluate those conditions locally before resolving the current, previous, and next step. If a saved step becomes hidden after a local choice changes, the client falls back to the latest visible earlier step, or the first visible step when none is earlier.
+
+Clients implementing sequential progression MUST:
+
+- require a direct user action before selecting the next visible step;
+- keep the selected step and any daily reset state in publisher/experience-namespaced private storage;
+- allow review of the immediately previous visible step without exposing hidden steps;
+- recalculate the active item set and local reminders after progression or a visibility change; and
+- treat the policy as navigation and local state only, never as permission to infer readiness, eligibility, urgency, or meaning from content.
+
+Without `progressionPolicy`, clients may use their ordinary bounded step selector.
+
 ## Cumulative steps
 
 A schedule item may carry optional `activation` metadata. Without it, the item is scoped to its own current step for backwards compatibility. `scope: current-step` keeps that behavior. `scope: from-step` keeps the item active after its step has been reached.

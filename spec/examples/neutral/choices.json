@@ -2,8 +2,20 @@
   "schemaVersion": "1.0",
   "resourceType": "choices",
   "resourceId": "community-events.choices",
-  "version": "2026.08.25.1",
+  "version": "2026.08.28.1",
   "choiceSets": [
+    {
+      "choiceId": "attendance-region",
+      "title": "Which event region should be used?",
+      "input": "single",
+      "required": true,
+      "localOnly": true,
+      "default": "DEMO",
+      "options": [
+        { "value": "DEMO", "label": "Demonstration region" },
+        { "value": "REMOTE", "label": "Remote region" }
+      ]
+    },
     {
       "choiceId": "event-interests",
       "title": "Which event types interest you?",

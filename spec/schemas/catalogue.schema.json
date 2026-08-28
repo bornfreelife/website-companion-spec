@@ -16,6 +16,7 @@
       "uniqueItems": true,
       "items": { "type": "string", "pattern": "^[A-Z0-9-]{2,20}$" }
     },
+    "regionalSelection": { "$ref": "#/$defs/regionalSelection" },
     "offers": {
       "type": "array",
       "maxItems": 10000,
@@ -23,6 +24,28 @@
     }
   },
   "$defs": {
+    "regionalSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["choiceId", "groupBy", "fallbackOrder"],
+      "properties": {
+        "choiceId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "groupBy": { "enum": ["actionId", "recommendationGroup"] },
+        "fallbackOrder": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 250,
+          "propertyNames": { "pattern": "^[A-Z0-9-]{2,20}$" },
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 50,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[A-Z0-9-]{2,20}$" }
+          }
+        }
+      }
+    },
     "offer": {
       "type": "object",
       "additionalProperties": false,

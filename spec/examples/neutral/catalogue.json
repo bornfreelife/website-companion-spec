@@ -2,8 +2,16 @@
   "schemaVersion": "1.0",
   "resourceType": "catalogue",
   "resourceId": "community-events.catalogue",
-  "version": "2026.08.25.1",
-  "regions": ["DEMO"],
+  "version": "2026.08.28.1",
+  "regions": ["DEMO", "REMOTE", "ALT"],
+  "regionalSelection": {
+    "choiceId": "attendance-region",
+    "groupBy": "recommendationGroup",
+    "fallbackOrder": {
+      "DEMO": ["DEMO", "ALT"],
+      "REMOTE": ["REMOTE", "ALT"]
+    }
+  },
   "offers": [
     {
       "offerId": "events.offers.workshop-registration",
@@ -14,6 +22,23 @@
       "vendor": "Example Community Publisher",
       "url": "https://demo.example/events/workshops",
       "regions": ["DEMO"],
+      "recommendationGroup": "workshop-registration",
+      "visibility": {
+        "choiceId": "event-interests",
+        "operator": "contains",
+        "value": "workshop"
+      }
+    },
+    {
+      "offerId": "events.offers.workshop-registration-alternative",
+      "offerKind": "reference",
+      "title": "Alternative workshop registration information",
+      "category": "Events",
+      "description": "Use this publisher-authored fallback when no regional registration page is available.",
+      "vendor": "Example Community Publisher",
+      "url": "https://demo.example/events/workshops/alternative",
+      "regions": ["ALT"],
+      "recommendationGroup": "workshop-registration",
       "visibility": {
         "choiceId": "event-interests",
         "operator": "contains",

@@ -86,7 +86,9 @@ if (connectionFields.get('experience') !== 'community-events') {
 
 const manifest = await loadJson('spec/examples/neutral/manifest.json');
 const discoveryDocument = await loadJson('spec/examples/neutral/discovery.json');
+const neutralChoices = await loadJson('spec/examples/neutral/choices.json');
 const neutralSchedule = await loadJson('spec/examples/neutral/schedule.json');
+const neutralCatalogue = await loadJson('spec/examples/neutral/catalogue.json');
 if (new URL(discoveryDocument.publisher.origin).hostname !== 'demo.example') {
   throw new Error('Neutral reference fixture must use the reserved demonstration origin');
 }
@@ -106,6 +108,31 @@ if (neutralSchedule.timeAnchors.some((anchor) => anchor.relativeTo && !routinePo
 }
 if (neutralSchedule.completionPolicy && !routinePointIds.has(neutralSchedule.completionPolicy.resetAtRoutinePointId)) {
   throw new Error('Neutral schedule completion policy refers to an unknown routine point');
+}
+const neutralChoiceIds = new Set(neutralChoices.choiceSets.map((choice) => choice.choiceId));
+for (const step of neutralSchedule.steps) {
+  if (step.visibility?.choiceId && !neutralChoiceIds.has(step.visibility.choiceId)) {
+    throw new Error(`Neutral schedule step ${step.stepId} refers to unknown choice ${step.visibility.choiceId}`);
+  }
+}
+if (neutralSchedule.progressionPolicy?.mode !== 'sequential-user-confirmed') {
+  throw new Error('Neutral schedule must demonstrate user-confirmed sequential progression');
+}
+if (neutralCatalogue.regionalSelection) {
+  const selection = neutralCatalogue.regionalSelection;
+  if (!neutralChoiceIds.has(selection.choiceId)) {
+    throw new Error(`Neutral catalogue regional selection refers to unknown choice ${selection.choiceId}`);
+  }
+  const declaredRegions = new Set(neutralCatalogue.regions);
+  for (const [choiceValue, fallbackRegions] of Object.entries(selection.fallbackOrder)) {
+    if (!fallbackRegions.every((region) => declaredRegions.has(region))) {
+      throw new Error(`Neutral catalogue fallback for ${choiceValue} contains an undeclared region`);
+    }
+  }
+  if (selection.groupBy === 'recommendationGroup'
+    && neutralCatalogue.offers.some((offer) => offer.regions?.length && !offer.recommendationGroup)) {
+    throw new Error('Every region-bound neutral offer must declare the configured grouping field');
+  }
 }
 const neutralResourceFiles = {
   'community-events.presentation': 'presentation.json',

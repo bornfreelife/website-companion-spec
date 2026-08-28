@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added optional data-only regional catalogue fallback grouped by signed action or recommendation identifiers.
+- Added optional step visibility and user-confirmed sequential schedule progression with a bounded daily-reset request.
 - Added optional publisher-suggested routine times and structured cumulative-step/replacement semantics without giving publishers notification permission.
 - Added optional publisher-declared routine points and structured relative-time relationships so users can set a small daily routine while clients derive planner-group reminder times without parsing prose.
 - Replaced the provisional custom-scheme/in-app scanner payload with an app-associated HTTPS handoff URL whose connection fields remain in the fragment.

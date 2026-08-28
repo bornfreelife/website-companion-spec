@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "manifestVersion": "2026.08.26.2",
+  "manifestVersion": "2026.08.28.1",
   "siteId": "example.demo.community",
   "generatedAt": "2026-08-24T00:00:00Z",
   "validUntil": "2026-09-23T00:00:00Z",
@@ -44,11 +44,11 @@
     {
       "resourceId": "community-events.choices",
       "resourceType": "choices",
-      "version": "2026.08.25.1",
-      "url": "https://demo.example/companion/resources/community-events.choices.json?version=2026.08.25.1",
+      "version": "2026.08.28.1",
+      "url": "https://demo.example/companion/resources/community-events.choices.json?version=2026.08.28.1",
       "mediaType": "application/json",
-      "sha256": "5e0d7d00299e28d7beff0857fbca0d26088e9b9ee0c4c775d16a3aa75a3827ae",
-      "bytes": 595
+      "sha256": "7732e777a732b4646eb531a87c33df4a10bb732eef8bd7fdb5acecbfe7a6b6da",
+      "bytes": 944
     },
     {
       "resourceId": "community-events.actions",
@@ -62,20 +62,20 @@
     {
       "resourceId": "community-events.schedule",
       "resourceType": "schedule",
-      "version": "2026.08.26.2",
-      "url": "https://demo.example/companion/resources/community-events.schedule.json?version=2026.08.26.2",
+      "version": "2026.08.28.1",
+      "url": "https://demo.example/companion/resources/community-events.schedule.json?version=2026.08.28.1",
       "mediaType": "application/json",
-      "sha256": "2cb732ebdf15801ebbe9db5e442ba5f7f35e51230e19e64ac070f4f84a65155e",
-      "bytes": 2081
+      "sha256": "8cae4970dd4fd21f0879b1af09ee70f428c5df91504fe069dcb4e01d30e54730",
+      "bytes": 2592
     },
     {
       "resourceId": "community-events.catalogue",
       "resourceType": "catalogue",
-      "version": "2026.08.25.1",
-      "url": "https://demo.example/companion/resources/community-events.catalogue.json?version=2026.08.25.1",
+      "version": "2026.08.28.1",
+      "url": "https://demo.example/companion/resources/community-events.catalogue.json?version=2026.08.28.1",
       "mediaType": "application/json",
-      "sha256": "aa998027dec70eb06605bbbc19cb8ef5f3cd708ddbcb265eb0a95d45117869c5",
-      "bytes": 692
+      "sha256": "7933bc22e7ed9946a456dc2e954029cf761a35e34fd25cbdedac490c8dba82ca",
+      "bytes": 1599
     }
   ],
   "allowedExternalOrigins": ["https://demo.example"],

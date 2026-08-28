@@ -2,11 +2,17 @@
   "schemaVersion": "1.0",
   "resourceType": "schedule",
   "resourceId": "community-events.schedule",
-  "version": "2026.08.26.2",
+  "version": "2026.08.28.1",
   "routinePoints": [
     { "routinePointId": "day-start", "label": "Day starts", "sort": 100, "suggestedLocalTime": "09:00" }
   ],
   "completionPolicy": { "scope": "daily", "resetAtRoutinePointId": "day-start" },
+  "progressionPolicy": {
+    "mode": "sequential-user-confirmed",
+    "advanceLabel": "This step is complete; continue",
+    "previousLabel": "Review previous step",
+    "resetDailyCompletionOnAdvance": true
+  },
   "timeAnchors": [
     {
       "anchorId": "morning",
@@ -23,6 +29,14 @@
       "title": "Event preparation",
       "summary": "Choose the tasks that are useful for your event.",
       "itemIds": ["events.schedule.bring-water", "events.schedule.review-accessibility"]
+    },
+    {
+      "stepId": "event-follow-up",
+      "order": 2,
+      "title": "Event follow-up",
+      "summary": "Review the follow-up only when workshops remain selected.",
+      "visibility": { "choiceId": "event-interests", "operator": "contains", "value": "workshop" },
+      "itemIds": []
     }
   ],
   "items": [
