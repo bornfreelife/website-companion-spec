@@ -51,6 +51,14 @@ Clients implementing sequential progression MUST:
 
 Without `progressionPolicy`, clients may use their ordinary bounded step selector.
 
+### End-of-visible-track continuation
+
+`progressionPolicy.endOfVisibleTrackContinuation` may declare one explicit transition between two scalar options of an existing local choice. A client may show the prompt only when the named `fromValue` is selected and the user is viewing the last currently visible schedule step. The transition requires a direct user action. It changes the named choice locally, may advance to the next step made visible by that choice, and opens the declared existing presentation screen.
+
+When `catalogueMode` is `newly-visible`, the client compares the destination catalogue under the declared `fromValue` and `toValue` using the declared stable comparison key, then initially shows only offers newly visible under `toValue`. The user must be able to leave that filter and see all currently visible offers. The transition does not mark offers ordered, initiate a purchase, enable notifications, or send local state to the publisher.
+
+Clients MUST validate that the choice, both option values, destination screen, catalogue source, and comparison key are supported by the same verified resource set. An invalid continuation makes the package incompatible rather than enabling a partial or publisher-defined fallback.
+
 ## Cumulative steps
 
 A schedule item may carry optional `activation` metadata. Without it, the item is scoped to its own current step for backwards compatibility. `scope: current-step` keeps that behavior. `scope: from-step` keeps the item active after its step has been reached.

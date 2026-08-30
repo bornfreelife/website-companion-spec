@@ -17,6 +17,7 @@
       "items": { "type": "string", "pattern": "^[A-Z0-9-]{2,20}$" }
     },
     "regionalSelection": { "$ref": "#/$defs/regionalSelection" },
+    "localOrderTracking": { "$ref": "#/$defs/localOrderTracking" },
     "offers": {
       "type": "array",
       "maxItems": 10000,
@@ -24,6 +25,16 @@
     }
   },
   "$defs": {
+    "localOrderTracking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["groupBy", "arrivalTracking", "combineCompatibleCartUrls"],
+      "properties": {
+        "groupBy": { "const": "vendor" },
+        "arrivalTracking": { "type": "boolean" },
+        "combineCompatibleCartUrls": { "type": "boolean" }
+      }
+    },
     "regionalSelection": {
       "type": "object",
       "additionalProperties": false,
@@ -60,6 +71,8 @@
         "vendor": { "type": "string", "minLength": 1, "maxLength": 200 },
         "url": { "type": "string", "format": "uri", "pattern": "^https://" },
         "cartUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "suggestedOrderQuantity": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "requiresCartReview": { "type": "boolean" },
         "regions": {
           "type": "array",
           "maxItems": 50,

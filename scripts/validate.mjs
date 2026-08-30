@@ -89,6 +89,40 @@ const discoveryDocument = await loadJson('spec/examples/neutral/discovery.json')
 const neutralChoices = await loadJson('spec/examples/neutral/choices.json');
 const neutralSchedule = await loadJson('spec/examples/neutral/schedule.json');
 const neutralCatalogue = await loadJson('spec/examples/neutral/catalogue.json');
+const scheduleValidator = ajv.getSchema('urn:website-companion:schema:schedule:1.0');
+const catalogueValidator = ajv.getSchema('urn:website-companion:schema:catalogue:1.0');
+const continuationExample = structuredClone(neutralSchedule);
+continuationExample.progressionPolicy.endOfVisibleTrackContinuation = {
+  choiceId: 'attendance-region',
+  fromValue: 'DEMO',
+  toValue: 'REMOTE',
+  title: 'Continue to remote events?',
+  description: 'Review the additional remote options before continuing.',
+  actionLabel: 'Continue to remote events',
+  destinationScreenId: 'upcoming-events',
+  catalogueSource: 'community-events.catalogue',
+  catalogueMode: 'newly-visible',
+  catalogueComparisonKey: 'recommendationGroup',
+  advanceToNextVisibleStep: true,
+};
+if (!scheduleValidator?.(continuationExample)) {
+  throw new Error(`Valid end-of-track continuation was rejected:\n${JSON.stringify(scheduleValidator?.errors, null, 2)}`);
+}
+const orderingExample = structuredClone(neutralCatalogue);
+orderingExample.localOrderTracking = {
+  groupBy: 'vendor',
+  arrivalTracking: true,
+  combineCompatibleCartUrls: true,
+};
+orderingExample.offers[0].suggestedOrderQuantity = 2;
+orderingExample.offers[0].requiresCartReview = true;
+if (!catalogueValidator?.(orderingExample)) {
+  throw new Error(`Valid local order tracking was rejected:\n${JSON.stringify(catalogueValidator?.errors, null, 2)}`);
+}
+orderingExample.offers[0].suggestedOrderQuantity = 1001;
+if (catalogueValidator(orderingExample)) {
+  throw new Error('Catalogue schema accepted an out-of-bounds suggested order quantity.');
+}
 if (new URL(discoveryDocument.publisher.origin).hostname !== 'demo.example') {
   throw new Error('Neutral reference fixture must use the reserved demonstration origin');
 }

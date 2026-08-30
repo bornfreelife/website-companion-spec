@@ -19,7 +19,7 @@ Local filtering uses only the contract's bounded condition vocabulary: compariso
 Publisher resources may provide:
 
 - identity, terms, privacy, support, and provenance;
-- content, choices, checklists, catalogues, schedules, and external links;
+- content, choices, checklists, catalogues, schedules, external links, and optional device-local order tracking;
 - semantic theme tokens, static assets, and bounded screen composition;
 - cache metadata and compatible content updates.
 
@@ -33,7 +33,7 @@ Publisher resources must not provide executable native code, JavaScript, WebAsse
 - Optional transfer fragments are quarantined locally before any network request and are never sent to the publisher.
 - A failed, unsigned, incompatible, or partial update cannot replace the last-known-good resource set.
 
-See [Architecture](docs/architecture.md), [discovery resolution](docs/discovery-resolution.md), [client conformance](docs/client-conformance.md), [QR onboarding](docs/qr-onboarding.md), [refresh and activation](docs/refresh.md), [schedules and local reminders](docs/schedules-reminders.md), [catalogue regional selection](docs/catalogue-regional-selection.md), [signing and trust](docs/signing.md), and [privacy and security](docs/privacy-security.md).
+See [Architecture](docs/architecture.md), [discovery resolution](docs/discovery-resolution.md), [client conformance](docs/client-conformance.md), [QR onboarding](docs/qr-onboarding.md), [refresh and activation](docs/refresh.md), [schedules and local reminders](docs/schedules-reminders.md), [catalogue ordering](docs/catalogue-ordering.md), [catalogue regional selection](docs/catalogue-regional-selection.md), [signing and trust](docs/signing.md), and [privacy and security](docs/privacy-security.md).
 
 ## Repository layout
 

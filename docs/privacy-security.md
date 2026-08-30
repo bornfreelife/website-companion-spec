@@ -4,7 +4,7 @@
 
 The baseline client has no account, advertising SDK, behavioral profile, or cross-device sync. Publisher requests are public-resource fetches and do not need cookies or credentials.
 
-The client MUST NOT send user choices, progress, reminder settings, order/preparation state, transfer payloads, or a stable device identifier to a publisher unless a future, separately consented contract explicitly introduces that data flow.
+The client MUST NOT send user choices, progress, reminder settings, catalogue order/arrival state, preparation state, transfer payloads, or a stable device identifier to a publisher unless a future, separately consented contract explicitly introduces that data flow.
 
 ## Local storage
 

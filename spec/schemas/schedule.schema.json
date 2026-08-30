@@ -54,8 +54,46 @@
         "mode": { "const": "sequential-user-confirmed" },
         "advanceLabel": { "type": "string", "minLength": 1, "maxLength": 160 },
         "previousLabel": { "type": "string", "minLength": 1, "maxLength": 160 },
-        "resetDailyCompletionOnAdvance": { "type": "boolean" }
+        "resetDailyCompletionOnAdvance": { "type": "boolean" },
+        "endOfVisibleTrackContinuation": { "$ref": "#/$defs/endOfVisibleTrackContinuation" }
       }
+    },
+    "endOfVisibleTrackContinuation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "choiceId",
+        "fromValue",
+        "toValue",
+        "title",
+        "description",
+        "actionLabel",
+        "destinationScreenId",
+        "catalogueSource",
+        "catalogueMode",
+        "catalogueComparisonKey",
+        "advanceToNextVisibleStep"
+      ],
+      "properties": {
+        "choiceId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "fromValue": { "$ref": "#/$defs/scalar" },
+        "toValue": { "$ref": "#/$defs/scalar" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 1500 },
+        "actionLabel": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "destinationScreenId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+        "catalogueSource": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
+        "catalogueMode": { "const": "newly-visible" },
+        "catalogueComparisonKey": { "enum": ["offerId", "actionId", "recommendationGroup"] },
+        "advanceToNextVisibleStep": { "type": "boolean" }
+      }
+    },
+    "scalar": {
+      "oneOf": [
+        { "type": "string", "maxLength": 300 },
+        { "type": "boolean" },
+        { "type": "integer" }
+      ]
     },
     "routinePoint": {
       "type": "object",
