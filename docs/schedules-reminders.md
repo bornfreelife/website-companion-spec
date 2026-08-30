@@ -65,10 +65,13 @@ A schedule item may carry optional `activation` metadata. Without it, the item i
 
 Publishers may also provide a stable `seriesId`. An item with `replacesEarlier: true` replaces earlier active items in the same series. When the replacing item is current-step scoped, earlier items with `retainWhenReplaced: true` remain active. These fields let a publisher encode cumulative and replacement behavior without requiring a client to interpret item labels, categories, or instructions.
 
+For alternatives that must disappear as a set once another active item takes over, publishers may assign one or more `groupIds` to the alternatives and place the same identifiers in the taking-over item's `suppressesGroupIds`. Suppression is evaluated only from active, visible items. It therefore preserves earlier alternatives until the taking-over step is reached, then excludes matching earlier and later alternatives while that suppressor remains active. Clients must treat these identifiers as opaque publisher-authored activation data and must not infer them from titles or subject matter.
+
 Clients MUST:
 
 - consider only steps up to and including the locally selected current step;
 - process items in signed step and item order;
 - apply current-step scope and structured replacement fields before rendering or scheduling notifications;
+- apply active group suppression after cumulative and series activation, before rendering or scheduling notifications;
 - use the same active-item calculation for the planner and reminder reconciliation; and
 - recalculate scheduled reminders whenever the selected step or verified schedule changes.

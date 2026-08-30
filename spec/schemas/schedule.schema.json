@@ -183,7 +183,19 @@
         "scope": { "enum": ["current-step", "from-step"] },
         "seriesId": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" },
         "replacesEarlier": { "type": "boolean" },
-        "retainWhenReplaced": { "type": "boolean" }
+        "retainWhenReplaced": { "type": "boolean" },
+        "groupIds": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" }
+        },
+        "suppressesGroupIds": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9._-]{1,119}$" }
+        }
       }
     },
     "reminder": {

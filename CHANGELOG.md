@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add bounded activation groups so an active publisher item can suppress earlier and later cumulative alternatives without client subject-matter logic.
 - Add opt-in, device-local vendor catalogue ordering and arrival tracking.
 - Add bounded compatible-cart composition metadata.
 - Add an explicit end-of-visible-track continuation that can show only newly visible catalogue offers.

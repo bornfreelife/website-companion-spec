@@ -108,6 +108,19 @@ continuationExample.progressionPolicy.endOfVisibleTrackContinuation = {
 if (!scheduleValidator?.(continuationExample)) {
   throw new Error(`Valid end-of-track continuation was rejected:\n${JSON.stringify(scheduleValidator?.errors, null, 2)}`);
 }
+const activationGroupExample = structuredClone(neutralSchedule);
+activationGroupExample.items[0].activation.groupIds = ['event-kit-alternative'];
+activationGroupExample.items[1].activation = {
+  scope: 'from-step',
+  suppressesGroupIds: ['event-kit-alternative'],
+};
+if (!scheduleValidator?.(activationGroupExample)) {
+  throw new Error(`Valid activation-group suppression was rejected:\n${JSON.stringify(scheduleValidator?.errors, null, 2)}`);
+}
+activationGroupExample.items[0].activation.groupIds = ['Invalid group'];
+if (scheduleValidator(activationGroupExample)) {
+  throw new Error('Schedule schema accepted an invalid activation-group ID.');
+}
 const orderingExample = structuredClone(neutralCatalogue);
 orderingExample.localOrderTracking = {
   groupBy: 'vendor',
