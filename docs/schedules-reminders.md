@@ -35,6 +35,10 @@ Clients that implement this policy MUST:
 
 If `completionPolicy` is absent, planner completion does not reset automatically.
 
+## Schedule-scoped progress
+
+When a presentation `progress@1` section names a schedule resource as its source, the client counts that schedule's currently active occurrences against the schedule's daily completion set. It does not add the actions referenced by those occurrences as a second set of progress items. This keeps one rendered planner occurrence equal to one progress item even when the same action is referenced by multiple schedule occurrences.
+
 ## User-confirmed sequential progression
 
 A schedule may declare `progressionPolicy.mode: sequential-user-confirmed`. The client then presents only adjacent backward navigation and an explicit user-confirmed advance action instead of a control that jumps directly to any future step. Optional publisher labels remain bounded text rendered by the fixed client. `resetDailyCompletionOnAdvance: true` asks the client to start a fresh local daily checklist when the user advances; it does not enable reminders or mark any item complete.

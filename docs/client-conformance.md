@@ -16,6 +16,7 @@ A conforming client implementation satisfies all of the following:
 - Sequential progression requires a direct local user confirmation and never infers readiness from publisher content.
 - Catalogue order state and end-of-track transitions remain local, require explicit user actions, and never call publisher state endpoints.
 - Cumulative schedule alternatives are suppressed only through opaque signed activation groups, never inferred from labels or subject matter.
+- A `progress@1` section sourced from a schedule counts that schedule's active occurrences against its daily completion set; it does not also count the actions referenced by those occurrences.
 - The implementation accurately describes manual connections, publisher-controlled content, local state, refresh behavior, and notifications.
 
 Passing this checklist demonstrates contract behavior only. It is not certification of an implementation or connected publisher.
