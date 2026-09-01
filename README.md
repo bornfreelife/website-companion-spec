@@ -2,7 +2,9 @@
 
 An open, domain-neutral contract for mobile apps that render user-selected website experiences with local progress, offline access, user-configured reminders, and publisher-supplied branding.
 
-Status: **0.1.0 draft — not production ready**
+Status: **0.1 pre-1.0 interoperability profile.**
+
+The profile is implemented by the Website Companion production candidate and its accepted publisher fixtures. Implementers must pin an exact specification revision and fail closed on unsupported contract versions. Normative 1.0 security and compatibility review remains pending, so compatibility with unpinned future revisions is not guaranteed.
 
 ## Reference client purpose
 
@@ -42,12 +44,12 @@ docs/                    Normative design and security requirements
 spec/openapi.yaml        HTTP surface
 spec/schemas/            JSON Schemas for discovery, manifests, presentation, content, choices, actions, schedules, and catalogues
 spec/examples/neutral/   Domain-neutral reference publisher
-scripts/                 Draft conformance checks
+scripts/                 Pre-1.0 conformance checks
 ```
 
-The neutral example is a community-events companion that demonstrates the complete draft capability set without defining a preferred publisher domain.
+The neutral example is a community-events companion that demonstrates the current profile without defining a preferred publisher domain.
 
-## Validate the draft
+## Validate the profile
 
 ```bash
 npm ci
